@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Pokemon } from '../models/pokemon';
 import { Page } from '../models/page';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class PokemonRepositoryService {
 
   private serviceUrl = 'http://localhost:8080/pokedex';
+  private urlApiImg = 'https://pokeres.bastionbot.org/images/pokemon/';
+  private extensionImg = '.png';
   // pagination
   private noPage: number;
   private taillePage: number;
@@ -28,7 +30,7 @@ export class PokemonRepositoryService {
 
   public refreshList() {
     const urlParams: HttpParams = new HttpParams().set('page', '' + this.noPage).set('size', '' + this.taillePage);
-    this.http.get<Page<Pokemon>>(this.serviceUrl, {params: urlParams}).subscribe(pok => this.pokemonsSubject.next(pok));
+    this.http.get<Page<Pokemon>>(this.serviceUrl, { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
   }
 
   public setNoPage(noPage: number): void {
@@ -42,6 +44,6 @@ export class PokemonRepositoryService {
    * @param pokeID : Id Pokemon
    */
   public getImagePokemonAPi(pokeID: number): string {
-    return `https://pokeres.bastionbot.org/images/pokemon/${pokeID}.png`;
+      return this.urlApiImg + `${pokeID}` + this.extensionImg;
   }
 }
