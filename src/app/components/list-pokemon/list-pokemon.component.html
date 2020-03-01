@@ -1,1 +1,16 @@
-<p>list-pokemon works!</p>
+<pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="taillePage" [ngModel]="noPage"
+    (pageChanged)="onPageChanged($event)" class="mt-1"></pagination>
+
+<h3>PokeDex sort by number</h3>
+<div class="row">
+    <div class="col-sm-4" *ngFor="let pokemon of pagePokemon.content">
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{pokemon.name}}</h5>
+                <p class="card-text">{{pokemon.description}}</p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+        </div>
+    </div>
+</div>
