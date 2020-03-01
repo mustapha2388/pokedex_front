@@ -7,10 +7,12 @@ import { ListPokemonComponent } from './components/list-pokemon/list-pokemon.com
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ListPokemonComponent
+    ListPokemonComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
