@@ -18,7 +18,7 @@ export class PokemonRepositoryService {
 
   constructor(private http: HttpClient) {
     this.noPage = 0;
-    this.taillePage = 50;
+    this.taillePage = 48;
     this.pokemonsSubject = new BehaviorSubject(Page.emptyPage<Pokemon>());
   }
 
@@ -34,5 +34,14 @@ export class PokemonRepositoryService {
   public setNoPage(noPage: number): void {
     this.noPage = noPage;
     this.refreshList();
+  }
+
+  /**
+   * USE POKERES API for Image
+   * USE POKEAPI for Data
+   * @param pokeID : Id Pokemon
+   */
+  public getImagePokemonAPi(pokeID: number): string {
+    return `https://pokeres.bastionbot.org/images/pokemon/${pokeID}.png`;
   }
 }

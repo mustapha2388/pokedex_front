@@ -46,4 +46,7 @@ export class ListPokemonComponent implements OnInit {
     this.pokemonService.setNoPage(event.page - 1);
   }
 
+  public getImgFromApi(id: number): string {
+    return this.pokemonService.getImagePokemonAPi(id);
+  }
 }
