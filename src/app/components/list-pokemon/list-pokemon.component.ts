@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models/pokemon';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-list-pokemon',
@@ -28,28 +29,8 @@ export class ListPokemonComponent implements OnInit {
     this.taillePage = 8;
     this.totalItems = 0;
     this.pagePokemon = Page.emptyPage<Pokemon>();
+    this.pokemonService.refreshList(this.router.url);
     this.getPokemon();
-    this.switchUrl();
-  }
-
-  switchUrl() {
-    if (this.router.url.includes('/list-asc')) {
-      this.pokemonService.refreshList('ASC');
-    } else if (this.router.url.includes('/list-desc')) {
-      this.pokemonService.refreshList('DESC');
-    } else if (this.router.url.includes('/list-id-desc')) {
-      this.pokemonService.refreshList('ID_DESC');
-    } else if (this.router.url.includes('max/weight')) {
-      this.pokemonService.refreshList('MAX_WEIGHT');
-    } else if (this.router.url.includes('max/height')) {
-      this.pokemonService.refreshList('MAX_HEIGHT');
-    } else if (this.router.url.includes('min/weight')) {
-      this.pokemonService.refreshList('MIN_WEIGHT');
-    } else if (this.router.url.includes('min/height')) {
-      this.pokemonService.refreshList('MIN_HEIGHT');
-    } else {
-      this.pokemonService.refreshList();
-    }
   }
 
   getPokemon() {
@@ -64,7 +45,7 @@ export class ListPokemonComponent implements OnInit {
   }
 
   public onPageChanged(event): void {
-    this.pokemonService.setNoPage(event.page - 1);
+    this.pokemonService.setNoPage(event.page - 1, this.router.url);
   }
 
   public getImgFromApi(id: number): string {
