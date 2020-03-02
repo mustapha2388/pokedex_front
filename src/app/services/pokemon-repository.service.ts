@@ -28,9 +28,37 @@ export class PokemonRepositoryService {
     return this.pokemonsSubject.asObservable();
   }
 
-  public refreshList() {
+  public choiceUrl(flag?: string): string {
+    switch (flag) {
+      case 'ASC':
+        console.log('in asc flag');
+        return this.serviceUrl + '/list-asc';
+      case 'DESC':
+        console.log('in desc flag');
+        return this.serviceUrl + '/list-desc';
+      case 'ID_DESC':
+        console.log('in desc flag');
+        return this.serviceUrl + '/list-id-desc';
+      case 'MAX_WEIGHT':
+        console.log('in desc flag');
+        return this.serviceUrl + '/pokemon/max/weight';
+      case 'MIN_WEIGHT':
+        console.log('in desc flag');
+        return this.serviceUrl + '/pokemon/min/weight';
+      case 'MAX_HEIGHT':
+        console.log('in max height');
+        return this.serviceUrl + '/pokemon/max/height';
+      case 'MIN_HEIGHT':
+        console.log('in min height');
+        return this.serviceUrl + '/pokemon/min/height';
+      default:
+        console.log('in default');
+        return this.serviceUrl;
+    }
+  }
+  public refreshList(filter?: string) {
     const urlParams: HttpParams = new HttpParams().set('page', '' + this.noPage).set('size', '' + this.taillePage);
-    this.http.get<Page<Pokemon>>(this.serviceUrl, { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
+    this.http.get<Page<Pokemon>>(this.choiceUrl(filter), { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
   }
 
   public setNoPage(noPage: number): void {
@@ -44,6 +72,6 @@ export class PokemonRepositoryService {
    * @param pokeID : Id Pokemon
    */
   public getImagePokemonAPi(pokeID: number): string {
-      return this.urlApiImg + `${pokeID}` + this.extensionImg;
+    return this.urlApiImg + `${pokeID}` + this.extensionImg;
   }
 }
