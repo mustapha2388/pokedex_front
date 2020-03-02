@@ -4,11 +4,14 @@
 <h3>PokeDex sort by number</h3>
 <div class="row">
     <div class="col-sm-4" *ngFor="let pokemon of pagePokemon.content">
-        <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card" style="width: 24rem;">
+            <div class="text-center">
+                <img class="card-img-top img-thumbnail rounded-circle" [src]="getImgFromApi(pokemon.id)"
+                onError="this.src='https://eternia.fr/public/media//rb/divers/missingno.png'" [alt]="pokemon.name">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">{{pokemon.name}}</h5>
-                <p class="card-text">{{pokemon.description}}</p>
+                <!-- <p class="card-text">{{pokemon.description}}</p> -->
                 <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
             </div>
         </div>

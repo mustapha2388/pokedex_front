@@ -14,7 +14,7 @@ import { FooterComponent } from './components/footer/footer.component';
     AppComponent,
     ListPokemonComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

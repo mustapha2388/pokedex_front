@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Pokemon } from '../models/pokemon';
 import { Page } from '../models/page';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -9,7 +9,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class PokemonRepositoryService {
 
-  private serviceUrl = 'http://localhost:8080/pokedex';
+  private serviceUrl = 'http://localhost:8080';
+  private urlApiImg = 'https://pokeres.bastionbot.org/images/pokemon/';
+  private extensionImg = '.png';
   // pagination
   private noPage: number;
   private taillePage: number;
@@ -18,7 +20,7 @@ export class PokemonRepositoryService {
 
   constructor(private http: HttpClient) {
     this.noPage = 0;
-    this.taillePage = 50;
+    this.taillePage = 48;
     this.pokemonsSubject = new BehaviorSubject(Page.emptyPage<Pokemon>());
   }
 
@@ -26,13 +28,37 @@ export class PokemonRepositoryService {
     return this.pokemonsSubject.asObservable();
   }
 
-  public refreshList() {
+  public getUrl(filter: string): string {
+    if (filter) {
+      return this.serviceUrl + filter;
+    } else {
+      return this.serviceUrl;
+    }
+  }
+  public refreshList(filter: string) {
+    console.log('filter:' + filter);
     const urlParams: HttpParams = new HttpParams().set('page', '' + this.noPage).set('size', '' + this.taillePage);
-    this.http.get<Page<Pokemon>>(this.serviceUrl, {params: urlParams}).subscribe(pok => this.pokemonsSubject.next(pok));
+    this.http.get<Page<Pokemon>>(this.getUrl(filter), { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
   }
 
-  public setNoPage(noPage: number): void {
+  public setNoPage(noPage: number, filter: string): void {
+    console.log(' taillePage :' + this.taillePage);
+    console.log(' noPage :' + noPage);
+
+    if (noPage > this.taillePage ) {
+      this.noPage = this.taillePage;
+    } else {
     this.noPage = noPage;
-    this.refreshList();
+    }
+    this.refreshList(filter);
+  }
+
+  /**
+   * USE POKERES API for Image
+   * USE POKEAPI for Data
+   * @param pokeID : Id Pokemon
+   */
+  public getImagePokemonAPi(pokeID: number): string {
+    return this.urlApiImg + `${pokeID}` + this.extensionImg;
   }
 }

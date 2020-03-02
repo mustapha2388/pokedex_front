@@ -4,9 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  {path: 'pokedex', component: ListPokemonComponent},
+  {path: 'pokedex/list', component: ListPokemonComponent},
   {path: 'pokedex/list-asc', component: ListPokemonComponent},
-  {path: '', pathMatch: 'full', redirectTo: '/pokedex/list'}
+  {path: 'pokedex/list-desc', component: ListPokemonComponent},
+  {path: 'pokedex/list-id-desc', component: ListPokemonComponent},
+  {path: 'pokedex/pokemon/max/weight', component: ListPokemonComponent},
+  {path: 'pokedex/pokemon/max/height', component: ListPokemonComponent},
+  {path: 'pokedex/pokemon/min/weight', component: ListPokemonComponent},
+  {path: 'pokedex/pokemon/min/height', component: ListPokemonComponent},
+  {path: '**', pathMatch: 'full', redirectTo: '/pokedex/list'}
 ];
 
 @NgModule({
