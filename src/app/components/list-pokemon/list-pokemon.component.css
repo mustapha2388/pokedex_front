@@ -1,9 +1,10 @@
 
-h3{
-    font-style: oblique;
-}
-
 img{
     width: 50%;
     height: auto;
+}
+
+.types {
+    width: 10%; 
+    height: 10%;
 }
