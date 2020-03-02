@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <img src="/assets/img/pokedex_icon.png"  class="img-responsive"  alt="Responsive image pokedex ">
     
-    <a class="navbar-brand" routerLink='/pokedex'>{{title}}</a>
+    <a class="navbar-brand" routerLink='/pokedex/list'>{{title}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,24 +21,23 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink='/pokedex/list-id-desc'>pokemons#</a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" routerLink='/pokedex/pokemon/min/weight'>less weight</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" routerLink='/pokedex/pokemon/max/weight'>More weight</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" routerLink='/pokedex/pokemon/min/height'>less height</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" routerLink='/pokedex/pokemon/max/height'>More height</a>
-            </li>
-
             
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/pokedex/pokemon/max/weight'>+ Weight</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/pokedex/pokemon/min/weight'>- Weight</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/pokedex/pokemon/max/height'>+ Height</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/pokedex/pokemon/min/height'>- Height</a>
+            </li>
+ 
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
             </li>

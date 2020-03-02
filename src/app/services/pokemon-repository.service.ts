@@ -9,7 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class PokemonRepositoryService {
 
-  private serviceUrl = 'http://localhost:8080/pokedex';
+  private serviceUrl = 'http://localhost:8080';
   private urlApiImg = 'https://pokeres.bastionbot.org/images/pokemon/';
   private extensionImg = '.png';
   // pagination
@@ -28,42 +28,29 @@ export class PokemonRepositoryService {
     return this.pokemonsSubject.asObservable();
   }
 
-  public choiceUrl(flag?: string): string {
-    switch (flag) {
-      case 'ASC':
-        console.log('in asc flag');
-        return this.serviceUrl + '/list-asc';
-      case 'DESC':
-        console.log('in desc flag');
-        return this.serviceUrl + '/list-desc';
-      case 'ID_DESC':
-        console.log('in desc flag');
-        return this.serviceUrl + '/list-id-desc';
-      case 'MAX_WEIGHT':
-        console.log('in desc flag');
-        return this.serviceUrl + '/pokemon/max/weight';
-      case 'MIN_WEIGHT':
-        console.log('in desc flag');
-        return this.serviceUrl + '/pokemon/min/weight';
-      case 'MAX_HEIGHT':
-        console.log('in max height');
-        return this.serviceUrl + '/pokemon/max/height';
-      case 'MIN_HEIGHT':
-        console.log('in min height');
-        return this.serviceUrl + '/pokemon/min/height';
-      default:
-        console.log('in default');
-        return this.serviceUrl;
+  public getUrl(filter: string): string {
+    if (filter) {
+      return this.serviceUrl + filter;
+    } else {
+      return this.serviceUrl;
     }
   }
-  public refreshList(filter?: string) {
+  public refreshList(filter: string) {
+    console.log('filter:' + filter);
     const urlParams: HttpParams = new HttpParams().set('page', '' + this.noPage).set('size', '' + this.taillePage);
-    this.http.get<Page<Pokemon>>(this.choiceUrl(filter), { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
+    this.http.get<Page<Pokemon>>(this.getUrl(filter), { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
   }
 
-  public setNoPage(noPage: number): void {
+  public setNoPage(noPage: number, filter: string): void {
+    console.log(' taillePage :' + this.taillePage);
+    console.log(' noPage :' + noPage);
+
+    if (noPage > this.taillePage ) {
+      this.noPage = this.taillePage;
+    } else {
     this.noPage = noPage;
-    this.refreshList();
+    }
+    this.refreshList(filter);
   }
 
   /**
