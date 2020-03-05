@@ -5,7 +5,7 @@ export class Pokemon {
         public  type1: string,
         public  type2: string,
         public  description: string,
-        private weight: number,
-        private height: number
+        public weight: number,
+        public height: number
     ) {}
 }

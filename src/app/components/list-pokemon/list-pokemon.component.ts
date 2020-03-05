@@ -14,7 +14,7 @@ import { ThrowStmt } from '@angular/compiler';
 export class ListPokemonComponent implements OnInit {
 
   constructor(private pokemonService: PokemonRepositoryService,
-              private router: Router) { }
+    private router: Router) { }
 
   // pagination
   noPage: number;
@@ -24,15 +24,22 @@ export class ListPokemonComponent implements OnInit {
   pagePokemon: Page<Pokemon>;
   private pokemonSubscription: Subscription;
 
+  tagFilter: string;
+
   ngOnInit() {
     this.noPage = 1;
     this.taillePage = 8;
     this.totalItems = 0;
     this.pagePokemon = Page.emptyPage<Pokemon>();
     this.pokemonService.refreshList(this.router.url);
+    this.tagFilter = 'numéro';
     this.getPokemon();
+    this.changeTag();
   }
 
+  convertTypeToImg(type: string): string {
+    return './assets/img/' + type + '.png';
+  }
   getPokemon() {
     this.pokemonSubscription = this.pokemonService
       .getPokemonPageAsObsversable()
@@ -44,6 +51,29 @@ export class ListPokemonComponent implements OnInit {
       });
   }
 
+  public changeTag() {
+    if (this.router.url.includes('min/weight')) {
+      this.tagFilter = 'Pokemon(s) le(s) plus léger';
+    } else if (this.router.url.includes('max/weight')) {
+      this.tagFilter = 'Pokemon(s) le(s) plus lourd';
+
+    } else if (this.router.url.includes('min/height')) {
+      this.tagFilter = 'Pokemon(s) le(s) plus petit';
+
+    } else if (this.router.url.includes('max/height')) {
+      this.tagFilter = 'Pokemon(s) le(s) plus grand';
+
+    } else if (this.router.url.includes('list-id-desc')) {
+      this.tagFilter = 'Pokemons par # décroissant';
+    } else if (this.router.url.includes('list-desc')) {
+      this.tagFilter = 'Pokemons par nom Z-A';
+    } else if (this.router.url.includes('list-asc')) {
+      this.tagFilter = 'Pokemons par nom A-Z';
+    } else {
+      this.tagFilter = 'Pokemons par # croissant';
+    }
+
+  }
   public onPageChanged(event): void {
     this.pokemonService.setNoPage(event.page - 1, this.router.url);
   }

@@ -1,18 +1,27 @@
 <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="taillePage" [ngModel]="noPage"
     (pageChanged)="onPageChanged($event)" class="mt-1"></pagination>
-
-<h3>PokeDex sort by number</h3>
+<div>
+<h5>{{tagFilter}}</h5> <br />
 <div class="row">
     <div class="col-sm-4" *ngFor="let pokemon of pagePokemon.content">
-        <div class="card" style="width: 24rem;">
+        <div class="card mb-5" style="width: 20rem;">
+            <div class="card-header">
+                <img style="float: right; " id="pokedex" src="/assets/img/poke_ball.png"  class="img-responsive"  alt="Responsive image pokedex "/>
+                <h3 style="text-align: left;"># {{pokemon.id}}</h3>
+            </div>
             <div class="text-center">
                 <img class="card-img-top img-thumbnail rounded-circle" [src]="getImgFromApi(pokemon.id)"
-                onError="this.src='https://eternia.fr/public/media//rb/divers/missingno.png'" [alt]="pokemon.name">
+                    onError="this.src='https://eternia.fr/public/media//rb/divers/missingno.png'" [alt]="pokemon.name">
             </div>
             <div class="card-body">
                 <h5 class="card-title">{{pokemon.name}}</h5>
                 <!-- <p class="card-text">{{pokemon.description}}</p> -->
-                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                <a class="btn btn-outline-success" routerLink="/pokedex/pokemon/{{pokemon.id}}/details"> detail</a>
+            </div>
+            <div class="card-footer font-weight-bold">
+                Type:
+                <img class="types" *ngIf="pokemon.type1" [src]="convertTypeToImg(pokemon.type1)">
+                <img class="types" *ngIf="pokemon.type2" [src]="convertTypeToImg(pokemon.type2)">
             </div>
         </div>
     </div>
