@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pokemon } from 'src/app/models/pokemon';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { ThrowStmt } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-list-pokemon',
@@ -14,7 +14,7 @@ import { ThrowStmt } from '@angular/compiler';
 export class ListPokemonComponent implements OnInit {
 
   constructor(private pokemonService: PokemonRepositoryService,
-    private router: Router) { }
+              private router: Router) { }
 
   // pagination
   noPage: number;

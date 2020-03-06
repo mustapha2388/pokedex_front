@@ -10,8 +10,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class PokemonRepositoryService {
 
   private serviceUrl = 'http://localhost:8080';
-  private urlApiImg = 'https://pokeres.bastionbot.org/images/pokemon/';
+  private urlPokeApi = 'https://pokeres.bastionbot.org/images/pokemon/';
   private extensionImg = '.png';
+  private serviceUrlById = 'http://localhost:8080/pokedex/pokemon/details';
   // pagination
   private noPage: number;
   private taillePage: number;
@@ -53,12 +54,20 @@ export class PokemonRepositoryService {
     this.refreshList(filter);
   }
 
+  public getPokemonByid(id: number): Promise<Pokemon> {
+    return this.http.get<Pokemon>(`${this.serviceUrlById}/${id}`).toPromise();
+  }
+
+  public getStatOfPokemonById(id: number): Promise<any> {
+    return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${id}`).toPromise();
+  }
+
   /**
    * USE POKERES API for Image
    * USE POKEAPI for Data
    * @param pokeID : Id Pokemon
    */
   public getImagePokemonAPi(pokeID: number): string {
-    return this.urlApiImg + `${pokeID}` + this.extensionImg;
+    return this.urlPokeApi + `${pokeID}` + this.extensionImg;
   }
 }

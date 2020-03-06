@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'pokedex/list-asc', component: ListPokemonComponent},
   {path: 'pokedex/list-desc', component: ListPokemonComponent},
   {path: 'pokedex/list-id-desc', component: ListPokemonComponent},
-  {path: 'pokedex/pokemon/:id/details', component: PokemonDetailComponent},
+  {path: 'pokedex/pokemon/details/:id', component: PokemonDetailComponent},
   {path: 'pokedex/pokemon/max/weight', component: ListPokemonComponent},
   {path: 'pokedex/pokemon/max/height', component: ListPokemonComponent},
   {path: 'pokedex/pokemon/min/weight', component: ListPokemonComponent},

@@ -1,1 +1,84 @@
 <p>pokemon-detail works!</p>
+
+
+<div class="container">
+  <div class="row">
+    <div class="card" *ngIf="pokemonDetail" id="card-detail">
+      <!--------NUMBER + POKEBAL IMG--->
+      <div class="card-header">
+        <img style="float: right; " id="pokeball" src="/assets/img/poke_ball.png" class="img-responsive"
+          alt="Responsive image pokedex " />
+        <h3 style="text-align: left;"># {{pokemonDetail.id}}</h3>
+        <h3>{{pokemonDetail.name}}</h3>
+      </div>
+
+      <div class="card-body">
+        <button class="btn btn-outline-dark" (click)="back()" id="btn-back">
+          <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </button>
+
+        <div id="dimensions">
+          <h5>Taille: {{pokemonDetail.height}} m</h5>
+          <h5>Poids: {{pokemonDetail.weight}} Kg</h5>
+        </div>
+
+
+        <img class="card-img-top img-responsive" id="image-pokemon" [src]="getImgFromApi(pokemonDetail.id)"
+          onError="this.src='https://eternia.fr/public/media//rb/divers/missingno.png'" [alt]="pokemonDetail.name">
+        <h5 class="card-text">Description:</h5>
+        <p class="card-text">{{pokemonDetail.description}}</p>
+
+        <br/>
+
+        <ol *ngIf="statsArr != null">
+          <li *ngFor="let elem of statsArr">
+
+            <div class="progress" *ngIf="elem.stat.name=='defense'" style="height: 30px;">
+              <div class="progress-bar bg-warning" role="progressbar" [ngStyle]="{'width': elem.base_stat+'%'}"
+                aria-valuemin="0" aria-valuemax="100">  <b>{{elem.stat.name}} {{ elem.base_stat}}% </b></div>
+            </div>
+
+            <div class="progress" *ngIf="elem.stat.name=='special-defense'" style="height: 30px;">
+              <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"
+                [ngStyle]="{'width': elem.base_stat+'%'}" aria-valuemin="0" aria-valuemax="100"> 
+                <b>{{elem.stat.name}} {{ elem.base_stat}}% </b>
+              </div>
+            </div>
+
+            <div class="progress" *ngIf="elem.stat.name=='special-attack'" style="height: 30px;">
+              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                [ngStyle]="{'width': elem.base_stat+'%'}" aria-valuemin="0" aria-valuemax="100">
+                <b>{{elem.stat.name}} {{ elem.base_stat}}% </b>
+              </div>
+            </div>
+            <div class="progress" *ngIf="elem.stat.name=='speed'" style="height: 30px;">
+              <div class="progress-bar bg-info" role="progressbar" [ngStyle]="{'width': elem.base_stat+'%'}"
+                aria-valuemin="0" aria-valuemax="100"> <b>{{elem.stat.name}} {{ elem.base_stat}}% </b></div>
+            </div>
+
+            <div class="progress" *ngIf="elem.stat.name=='hp'" style="height: 30px;">
+              <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width': elem.base_stat+'%'}"
+                aria-valuemin="0" aria-valuemax="100"> <b>{{elem.stat.name}} {{ elem.base_stat}}% </b></div>
+            </div>
+
+            <div class="progress" *ngIf="elem.stat.name=='attack'" style="height: 30px;">
+              <div class="progress-bar bg-danger" role="progressbar" [ngStyle]="{'width': elem.base_stat+'%'}"
+                aria-valuemin="0" aria-valuemax="100"> <b>{{elem.stat.name}} {{ elem.base_stat}}%</b></div>
+            </div>
+            <br/>
+          </li>
+          
+        </ol>
+        <!-----------TYPE------->
+        <br/>
+        <div class="card-footer font-weight-bold">
+         <h5>Types</h5>
+          <img class="types-detail" *ngIf="pokemonDetail.type1" [src]="convertTypeToImg(pokemonDetail.type1)">
+          <img class="types-detail" *ngIf="pokemonDetail.type2" [src]="convertTypeToImg(pokemonDetail.type2)">
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
