@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-detail.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,8 @@ import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-deta
     AppRoutingModule,
     PaginationModule.forRoot(),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
