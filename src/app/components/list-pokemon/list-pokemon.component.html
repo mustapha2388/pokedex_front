@@ -1,7 +1,12 @@
 <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="taillePage" [ngModel]="noPage"
     (pageChanged)="onPageChanged($event)" class="mt-1"></pagination>
 <div>
-<h5>{{tagFilter}}</h5> <br />
+    <div id="filter" *ngIf="filterType">
+        <app-filtre-pokemon [typesInput]="filterType" (typeOutput)="onPokemonFilter($event)"></app-filtre-pokemon>
+    </div>
+<h5>{{tagFilter}}</h5>
+
+ <br/>
 <div class="row">
     <div class="col-sm-4" *ngFor="let pokemon of pagePokemon.content">
         <div class="card mb-5" style="width: 20rem;">

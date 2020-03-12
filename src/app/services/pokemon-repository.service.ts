@@ -16,6 +16,7 @@ export class PokemonRepositoryService {
   // pagination
   private noPage: number;
   private taillePage: number;
+  private filtreType: string;
 
   private pokemonsSubject: BehaviorSubject<Page<Pokemon>>;
 
@@ -31,6 +32,7 @@ export class PokemonRepositoryService {
 
   public getUrl(filter: string): string {
     if (filter) {
+      console.log('url here ' + this.serviceUrl + filter);
       return this.serviceUrl + filter;
     } else {
       return this.serviceUrl;
@@ -38,7 +40,16 @@ export class PokemonRepositoryService {
   }
   public refreshList(filter: string) {
     console.log('filter:' + filter);
-    const urlParams: HttpParams = new HttpParams().set('page', '' + this.noPage).set('size', '' + this.taillePage);
+    let urlParams: HttpParams = null;
+    if ( filter === '/pokedex/search/types') {
+     urlParams = new HttpParams().set('page', '' + this.noPage)
+                .set('size', '' + this.taillePage)
+                .set('type', this.filtreType)
+                .set('type2', this.filtreType);
+    } else {
+      urlParams = new HttpParams().set('page', '' + this.noPage).set('size', '' + this.taillePage);
+
+    }
     this.http.get<Page<Pokemon>>(this.getUrl(filter), { params: urlParams }).subscribe(pok => this.pokemonsSubject.next(pok));
   }
 
@@ -54,12 +65,22 @@ export class PokemonRepositoryService {
     this.refreshList(filter);
   }
 
+  public getTypesPokemon(): Observable<string []> {
+    return this.http.get<string[]>(this.serviceUrl + '/pokedex/list-type');
+  }
+
   public getPokemonByid(id: number): Promise<Pokemon> {
     return this.http.get<Pokemon>(`${this.serviceUrlById}/${id}`).toPromise();
   }
 
   public getStatOfPokemonById(id: number): Promise<any> {
     return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${id}`).toPromise();
+  }
+
+  public setFiltreType(typeStr: string): void {
+    console.log('in setFiltreType' + typeStr);
+    this.filtreType = typeStr;
+    this.refreshList('/pokedex/search/types');
   }
 
   /**

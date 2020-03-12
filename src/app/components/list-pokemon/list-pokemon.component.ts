@@ -1,6 +1,6 @@
 import { Page } from './../../models/page';
 import { PokemonRepositoryService } from './../../services/pokemon-repository.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Pokemon } from 'src/app/models/pokemon';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
   templateUrl: './list-pokemon.component.html',
   styleUrls: ['./list-pokemon.component.css']
 })
-export class ListPokemonComponent implements OnInit {
+export class ListPokemonComponent implements OnInit, OnDestroy {
+
 
   constructor(private pokemonService: PokemonRepositoryService,
               private router: Router) { }
@@ -25,6 +26,7 @@ export class ListPokemonComponent implements OnInit {
   private pokemonSubscription: Subscription;
 
   tagFilter: string;
+  filterType: string[] = [];
 
   ngOnInit() {
     this.noPage = 1;
@@ -34,12 +36,18 @@ export class ListPokemonComponent implements OnInit {
     this.pokemonService.refreshList(this.router.url);
     this.tagFilter = 'numéro';
     this.getPokemon();
+    this.getFilter();
     this.changeTag();
   }
 
   convertTypeToImg(type: string): string {
     return './assets/img/' + type + '.png';
   }
+
+  getFilter() {
+    this.pokemonService.getTypesPokemon().subscribe(type => this.filterType = type);
+  }
+
   getPokemon() {
     this.pokemonSubscription = this.pokemonService
       .getPokemonPageAsObsversable()
@@ -69,11 +77,21 @@ export class ListPokemonComponent implements OnInit {
       this.tagFilter = 'Pokemons par nom Z-A';
     } else if (this.router.url.includes('list-asc')) {
       this.tagFilter = 'Pokemons par nom A-Z';
+    } else if (this.router.url.includes('/search/types')){
+      this.tagFilter = 'Pokemons par filter';
     } else {
       this.tagFilter = 'Pokemons par # croissant';
     }
 
   }
+
+  public onPokemonFilter(event: number) {
+    if (event > 0) {
+    console.log('onpokemonFilter' + event);
+    this.pokemonService.setFiltreType(this.filterType[event - 1]);
+    }
+  }
+
   public onPageChanged(event): void {
     this.pokemonService.setNoPage(event.page - 1, this.router.url);
   }
@@ -81,4 +99,9 @@ export class ListPokemonComponent implements OnInit {
   public getImgFromApi(id: number): string {
     return this.pokemonService.getImagePokemonAPi(id);
   }
+
+  ngOnDestroy(): void {
+    this.pokemonSubscription.unsubscribe();
+  }
+
 }

@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'pokedex/pokemon/max/height', component: ListPokemonComponent},
   {path: 'pokedex/pokemon/min/weight', component: ListPokemonComponent},
   {path: 'pokedex/pokemon/min/height', component: ListPokemonComponent},
+  {path: 'pokedex/pokemon/search/types', component: ListPokemonComponent},
   {path: '**', pathMatch: 'full', redirectTo: '/pokedex/list'}
 ];
 

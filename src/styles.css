@@ -42,6 +42,10 @@ body {
 * List Pokemon Component
 */
 
+#filter {
+    float: right;
+}
+
 .thumbdata-pokemon {
     width: 50%;
     height: auto;

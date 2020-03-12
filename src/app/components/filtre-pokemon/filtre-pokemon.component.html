@@ -1,0 +1,18 @@
+<form>
+    <div class="row ml-1">
+        <div class="form-group">
+            <label for="choixType">Type:</label>
+            <select class="form-control"
+                    name="choixType"
+                    id="choixType"
+                   
+                    id="choixType"
+                    [(ngModel)]="choixType"
+                    (ngModelChange)="onChoixType($event)"
+                    >
+                <option value="0">pas de filtre</option>
+                <option *ngFor="let type of typesInput; let index = index;" [value]="index+1">{{type}}</option>
+            </select>
+        </div>
+    </div>
+</form>

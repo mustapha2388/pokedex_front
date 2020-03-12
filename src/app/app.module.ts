@@ -11,6 +11,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-detail.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FiltrePokemonComponent } from './components/filtre-pokemon/filtre-pokemon.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NavBarComponent,
     FooterComponent,
     PokemonDetailComponent,
+    FiltrePokemonComponent,
   ],
   imports: [
     BrowserModule,
